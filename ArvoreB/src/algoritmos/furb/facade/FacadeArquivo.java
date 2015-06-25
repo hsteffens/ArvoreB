@@ -17,7 +17,7 @@ public class FacadeArquivo {
 		return file.exists();
 	}
 	
-	public static void criaConteudoArquivo(String arquivo,String conteudo) throws IOException{
+	public static void criaConteudoArquivo(String arquivo, String conteudo) throws IOException{
 		fileOutputStream = new FileOutputStream(new File(arquivo));
 		byte[] bytes = conteudo.getBytes();
 		try {
@@ -25,7 +25,7 @@ public class FacadeArquivo {
 			fileOutputStream.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			fileOutputStream.close();
 		}
 	}

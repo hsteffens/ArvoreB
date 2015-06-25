@@ -8,14 +8,8 @@ import algoritmos.furb.nodo.NodoArvoreB;
 public class ArvoreB implements IArvoreB {
 	private int ordem;
 	private NodoArvoreB raiz;
-
-	public int getCapacidade() {
-		return ordem * 2;
-	}
-
-	public int getNroSubArvores() {
-		return getCapacidade() + 1;
-	}
+	private boolean aberto;
+	private String nomeArquivo;
 
 	@Override
 	public ArvoreB cria(int ordem, String nomeArquivo) {
@@ -25,6 +19,7 @@ public class ArvoreB implements IArvoreB {
 			FacadeArquivo.criarArquivo(nomeArquivo);
 			FacadeArquivo.criaConteudoArquivo(nomeArquivo, criaArvoreVazia()
 					.toString());
+			this.setNomeArquivo(nomeArquivo);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -32,22 +27,27 @@ public class ArvoreB implements IArvoreB {
 	}
 
 	@Override
-	public ArvoreB abre(String NomeArquivo) {
-		return null;
+	public ArvoreB abre(String nomeArquivo) {
+		setNomeArquivo(nomeArquivo);
+		setAberto(true);
+		return this;
 	}
 
 	@Override
 	public boolean insere(int chave) {
+		//TODO
 		return false;
 	}
 
 	@Override
 	public boolean remove(int chave) {
+		//TODO
 		return false;
 	}
 
 	@Override
 	public boolean pesquisa(int chave) {
+		//TODO
 		return false;
 	}
 
@@ -70,9 +70,9 @@ public class ArvoreB implements IArvoreB {
 		String campValor = "";
 		if (valor > 100 && valor < 1000) {
 			campValor = "0" + valor;
-		}else if(valor > 10){
+		} else if(valor > 10) {
 			campValor = "00" + valor;
-		}else if(valor < 10){
+		} else if(valor < 10) {
 			campValor = "000" + valor;
 		}
 		return campValor;
@@ -86,6 +86,35 @@ public class ArvoreB implements IArvoreB {
 
 	@Override
 	public ArvoreB fecha(String nomeArquivo) {
-		return null;
+		if (this.nomeArquivo.equalsIgnoreCase(nomeArquivo)){
+			setNomeArquivo(null);
+			setAberto(false);
+		}
+		
+		return this;
+	}
+	
+	public boolean isAberto() {
+		return aberto;
+	}
+
+	public void setAberto(boolean aberto) {
+		this.aberto = aberto;
+	}
+
+	public int getCapacidade() {
+		return ordem * 2;
+	}
+
+	public int getNroSubArvores() {
+		return getCapacidade() + 1;
+	}
+
+	public String getNomeArquivo() {
+		return nomeArquivo;
+	}
+
+	public void setNomeArquivo(String nomeArquivo) {
+		this.nomeArquivo = nomeArquivo;
 	}
 }
