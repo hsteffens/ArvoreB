@@ -15,7 +15,7 @@ public class NodoArvoreB{
 	}
 
 	public int getQuantidadeAlocada() {
-		return quantidadeAlocada;
+		return getNodo().keySet().size();
 	}
 
 	public void setQuantidadeAlocada(int quantidade) {
