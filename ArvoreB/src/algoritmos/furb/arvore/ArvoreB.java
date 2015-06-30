@@ -128,7 +128,45 @@ public class ArvoreB implements IArvoreB {
 										valores[1] = nodoArvoreB.getNodo().get(infos)[i] + 1;
 									}
 									for (int chaves : lNodo.get(0).getNodo().keySet()) {
+										NodoArvoreB nodoAux = new NodoArvoreB();
+										Map<Integer, int[]> mapa = new HashMap<Integer, int[]>();
+										for (Integer indice : nodoArvoreB.getNodo().keySet()) {
+											mapa.put(indice, nodoArvoreB.getNodo().get(indice));
+										}
+										nodoAux.setNodo(mapa);
+										nodoAux.setQuantidadeAlocada(nodoArvoreB.getQuantidadeAlocada());
+										for (int info : nodoArvoreB.getNodo().keySet()) {
+											if (chaves < info) {
+												int[] subArvoresPai = new int[2];
+												subArvoresPai[0] = nodoAux.getNodo().get(info)[0] + 1;
+												subArvoresPai[1] = nodoAux.getNodo().get(info)[1] + 1;
+												nodoAux.getNodo().remove(info);
+												nodoAux.getNodo().put(info, subArvoresPai);
+											}
+										}
+										nodoArvoreB = new NodoArvoreB();
+										Map<Integer, int[]> mapa2 = new HashMap<Integer, int[]>();
+										for (Integer indice : nodoAux.getNodo().keySet()) {
+											mapa2.put(indice, nodoAux.getNodo().get(indice));
+										}
+										nodoArvoreB.setNodo(mapa2);
+										nodoArvoreB.setQuantidadeAlocada(nodoAux.getQuantidadeAlocada());
+										
+										Integer indice = null;
+										for (int j = 0; j < lNodoArvore.size(); j++) {
+											if (lNodoArvore.get(j).getNodo().keySet().equals(nodoArvoreB.getNodo().keySet())) {
+												indice = j;
+											}
+										}
+										List<NodoArvoreB> listaAux = new ArrayList<NodoArvoreB>();
+										for (; indice < lNodoArvore.size(); indice++) {
+											listaAux.add(lNodoArvore.get(indice));
+										}
+										lNodoArvore.removeAll(listaAux);
+										listaAux.remove(0);
 										nodoArvoreB.getNodo().put(chaves, valores);
+										lNodoArvore.add(nodoArvoreB);
+										lNodoArvore.addAll(listaAux);
 									}
 									break varreNodoPai;
 								}
